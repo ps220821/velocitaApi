@@ -4,16 +4,19 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 # Copy and restore project files
-COPY *.csproj ./
+COPY *.csproj ./ 
 RUN dotnet restore
 
 # Copy the remaining files and build the application
-COPY . ./
+COPY . ./ 
 RUN dotnet publish -c Release -o out
 
 # Stage 2: Run the application
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
+
+# Expose the port the application will be listening on
+EXPOSE 8080
 
 # Copy the published output from the build stage
 COPY --from=build /app/out .
