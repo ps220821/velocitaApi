@@ -1,7 +1,8 @@
 # Stage 1: Build the application
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
-
+EXPOSE 80
+EXPOSE 443
 # Copy and restore project files
 COPY *.csproj ./
 RUN dotnet restore
@@ -16,9 +17,6 @@ WORKDIR /app
 
 # Copy the published output from the build stage
 COPY --from=build /app/out .
-
-# Expose the port the application listens on
-EXPOSE 5118
 
 # Set the entry point for the application
 ENTRYPOINT ["dotnet", "velocitaApi.dll"]
