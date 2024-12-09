@@ -114,7 +114,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 // Enable Identity APIs
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiddleware<GlobalExceptionMiddleware>();
