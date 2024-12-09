@@ -1,0 +1,6 @@
+@velocitaApi_HostAddress = http://localhost:5118
+
+GET {{velocitaApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
