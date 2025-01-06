@@ -4,6 +4,7 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Mysqlx;
 namespace velocitaApi.Middleware
 {
     public class GlobalExceptionMiddleware
@@ -25,18 +26,27 @@ namespace velocitaApi.Middleware
             }
             catch (Exception ex)
             {
+                ErrorResponse errorResponse = null;
                 _logger.LogError(ex, "An unexpected error occurred");
 
                 // Handle the error response
                 httpContext.Response.ContentType = "application/json";
                 httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-                var errorResponse = new ErrorResponse
+                if (httpContext.Response.StatusCode == null && ex.Message == null)
                 {
-                    Message = "An unexpected error occurred",
-                    Details = ex.Message, // Optional: In development, we may want to show the exception message
-                    StatusCode = httpContext.Response.StatusCode
-                };
+
+                    errorResponse = new ErrorResponse();
+                }
+                else
+                {
+                    errorResponse = new ErrorResponse(
+                  httpContext.Response.StatusCode,
+                  ex.Message,
+                  "An unexpected error occurred"
+              );
+                }
+
 
                 // Return the error response
                 await httpContext.Response.WriteAsync(JsonConvert.SerializeObject(errorResponse));
@@ -47,8 +57,22 @@ namespace velocitaApi.Middleware
     // ErrorResponse class for the error response structure
     public class ErrorResponse
     {
-        public int StatusCode { get; set; }
-        public string Message { get; set; }
-        public string Details { get; set; }
+        public int StatusCode { get; private set; }
+        public string Message { get; private set; }
+        public string Details { get; private set; }
+
+        public ErrorResponse()
+        {
+            StatusCode = 500;
+            Message = "An unexpected error occurred";
+            Details = string.Empty;
+        }
+
+        public ErrorResponse(int statusCode, string message, string details)
+        {
+            StatusCode = statusCode;
+            Message = message;
+            Details = details;
+        }
     }
 }

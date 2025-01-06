@@ -19,6 +19,7 @@ public class AccountController : ControllerBase
         _tokenService = tokenService;
         _signInManager = signInManager;
     }
+
     [HttpPost("register")]
     public async Task<ActionResult<string>> Register([FromBody] RegisterDto registerDto)
     {

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using velocitaApi.Dtos.car;
 using velocitaApi.Interfaces;
@@ -54,6 +53,7 @@ namespace velocitaApi.Controllers
             {
                 return NotFound("Brand not found");
             }
+
             var mappedCar = Mapper.MapCreate<Car>(carDto);
 
             var createdCar = await _carRepository.CreateAsync(mappedCar);

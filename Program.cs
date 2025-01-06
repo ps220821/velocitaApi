@@ -12,6 +12,8 @@ using Microsoft.OpenApi.Models;
 using velocitaApi.models;
 using Microsoft.AspNetCore.Identity;
 using velocitaApi.Interfaces;
+using velocitaApi.Services.PdfService;
+using velocitaApi.Services.Smtp;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,14 +25,13 @@ builder.Services.AddCors(options =>
                .AllowAnyHeader());
 });
 
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.ListenAnyIP(5001, listenOptions =>
-    {
-        listenOptions.UseHttps("./certificates/httpscert.pfx", "yourpassword");
-    });
-});
-
+// builder.WebHost.ConfigureKestrel(options =>
+// {
+//     options.ListenAnyIP(5001, listenOptions =>
+//     {
+//         listenOptions.UseHttps("./certificates/httpscert.pfx", "yourpassword");
+//     });
+// });
 
 builder.Services.AddControllers(options =>
 {
@@ -40,8 +41,6 @@ builder.Services.AddControllers(options =>
     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
 });
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
-
-
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -105,6 +104,8 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
+builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
+builder.Services.AddTransient<SmtpService>();
 
 builder.Services.AddScoped<ICarRepository, CarRepository>();
 builder.Services.AddScoped<IBrandRepository, BrandRepository>();
@@ -115,6 +116,8 @@ builder.Services.AddScoped<IOptionRepository, OptionRepository>();
 builder.Services.AddScoped<ICarOptionRepository, CarOptionRepository>();
 builder.Services.AddScoped<ICarSpecRepository, CarSpecRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+// pdf
+builder.Services.AddScoped<PdfContractService>();
 
 var app = builder.Build();
 
