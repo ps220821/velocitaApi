@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("velocitaApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d7b3c179a316084589228c78819c634c00bc3bec")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0fd49c156ae330cb3500f1e01f5cd3e0fc5424e8")]
 [assembly: System.Reflection.AssemblyProductAttribute("velocitaApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("velocitaApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

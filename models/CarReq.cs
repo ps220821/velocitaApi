@@ -1,6 +1,6 @@
-using System.Text.Json.Serialization;
 namespace velocitaApi.models
 {
+    // this class is used for response not an entity
     public class CarReq
     {
         public Car Car { get; set; }

@@ -44,7 +44,7 @@ namespace velocitaApi.Controllers
         [Authorize]
         public async Task<ActionResult<Category>> CreateCategory([FromBody] CategoryDto categoryDto)
         {
-            var mappedCategory = Mapper.MapCreate<Category>(categoryDto);
+            var mappedCategory = Mapper.DtoMapper<Category>(categoryDto);
 
             var createdCategory = await _categoryRepository.CreateAsync(mappedCategory);
 
@@ -64,7 +64,7 @@ namespace velocitaApi.Controllers
             {
                 return NotFound("Category not found");
             }
-            var mappedOption = Mapper.MapUpdate(categoryDto, category);
+            var mappedOption = Mapper.DtoMapper(categoryDto, category);
             var updatedCategory = await _categoryRepository.UpdateAsync(mappedOption);
 
             if (updatedCategory == null)

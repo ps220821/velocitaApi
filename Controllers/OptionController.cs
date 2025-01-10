@@ -44,7 +44,7 @@ namespace velocitaApi.Controllers
 
         public async Task<ActionResult<Option>> CreateOption([FromBody] OptionDto optionDto)
         {
-            var mappedOption = Mapper.MapCreate<Option>(optionDto);
+            var mappedOption = Mapper.DtoMapper<Option>(optionDto);
             var newOption = await _optionRepository.CreateAsync(mappedOption);
 
             return CreatedAtAction(nameof(GetById), new { id = newOption.id }, newOption);
@@ -60,7 +60,7 @@ namespace velocitaApi.Controllers
                 return NotFound($"Option with ID {id} not found.");
             }
 
-            var mappedOption = Mapper.MapUpdate(optionDto, option);
+            var mappedOption = Mapper.DtoMapper(optionDto, option);
             var updatedOption = await _optionRepository.UpdateAsync(mappedOption);
 
             if (updatedOption == null)

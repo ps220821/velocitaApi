@@ -5,6 +5,9 @@ namespace velocitaApi.models
 {
     public class AppUser : IdentityUser
     {
+        public void Method()
+        {
 
+        }
     }
 }

@@ -24,7 +24,7 @@ namespace velocitaApi.Repository
 
         public async Task<Car?> GetByIdAsync(int id)
         {
-            var car = await _context.car
+            var car = await _context.car  // Include related entities for response Brand / Category / CarSpecs
             .Include(c => c.Brand)
             .Include(c => c.Category)
             .Include(c => c.CarSpecs)

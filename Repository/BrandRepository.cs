@@ -33,7 +33,7 @@ namespace velocitaApi.Repository
         public async Task<Brand> CreateAsync(BrandDto brandDto)
         {
 
-            var mappedBrand = Mapper.MapCreate<Brand>(brandDto);
+            var mappedBrand = Mapper.DtoMapper<Brand>(brandDto);
             var createReq = await _context.brand.AddAsync(mappedBrand);
             await _context.SaveChangesAsync();
 

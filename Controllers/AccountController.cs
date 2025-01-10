@@ -29,19 +29,20 @@ public class AccountController : ControllerBase
             {
                 return BadRequest("Invalid data");
             }
+
             var user = new AppUser
             {
                 UserName = registerDto.Username,
                 Email = registerDto.Email
             };
-            var createUser = await _userManager.CreateAsync(user, registerDto.Password);
 
+            var createUser = await _userManager.CreateAsync(user, registerDto.Password);
             if (createUser.Succeeded)
             {
                 var roleResult = await _userManager.AddToRoleAsync(user, "User");
                 if (roleResult.Succeeded)
                 {
-                    var mappedDto = Mapper.MapCreate<NewUserDto>(user);
+                    var mappedDto = Mapper.DtoMapper<NewUserDto>(user);
                     mappedDto.Token = _tokenService.CreateToken(user);
                     return Ok(
                         mappedDto
@@ -84,7 +85,7 @@ public class AccountController : ControllerBase
             return Unauthorized("Username or password is incorrect");
         }
 
-        var mappedUser = Mapper.MapCreate<NewUserDto>(user);
+        var mappedUser = Mapper.DtoMapper<NewUserDto>(user);
         mappedUser.Token = _tokenService.CreateToken(user);
 
         return Ok(

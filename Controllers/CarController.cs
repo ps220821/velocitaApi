@@ -54,7 +54,7 @@ namespace velocitaApi.Controllers
                 return NotFound("Brand not found");
             }
 
-            var mappedCar = Mapper.MapCreate<Car>(carDto);
+            var mappedCar = Mapper.DtoMapper<Car>(carDto);
 
             var createdCar = await _carRepository.CreateAsync(mappedCar);
 
@@ -88,7 +88,7 @@ namespace velocitaApi.Controllers
                 existingCar.Brand = brand;
                 existingCar.BrandId = carDto.BrandId;
             }
-            var mappedCar = Mapper.MapUpdate(carDto, existingCar);
+            var mappedCar = Mapper.DtoMapper(carDto, existingCar);
 
             var updatedCar = await _carRepository.UpdateAsync(mappedCar);
             if (updatedCar == null)

@@ -50,7 +50,7 @@ namespace velocitaApi.Controllers
         [Authorize]
         public async Task<ActionResult<Order>> CreateOrder([FromBody] OrderDto orderDto)
         {
-            var mappedOrder = Mapper.MapCreate<Order>(orderDto);
+            var mappedOrder = Mapper.DtoMapper<Order>(orderDto);
 
             if (orderDto.CarId.HasValue)
             {
@@ -89,7 +89,7 @@ namespace velocitaApi.Controllers
                 return NotFound("Order not found");
             }
 
-            var mappedOrder = Mapper.MapUpdate(orderDto, order);
+            var mappedOrder = Mapper.DtoMapper(orderDto, order);
 
             if (orderDto.CarId.HasValue)
             {

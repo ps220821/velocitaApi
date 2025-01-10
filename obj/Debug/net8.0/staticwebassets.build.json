@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "haTUlkq+t5lkH3tIbYCIOhf+V1endKZ/JXy+UeGC/j8=",
+  "Hash": "0JqsGsoQ2UE9BjtaYz5LmrRagIb7FlT13jUiQg47tYs=",
   "Source": "velocitaApi",
   "BasePath": "_content/velocitaApi",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }

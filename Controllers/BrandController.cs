@@ -15,8 +15,6 @@ namespace velocitaApi.Controllers
             _brandRepository = brandRepository;
         }
 
-
-
         [HttpGet]
         public async Task<ActionResult<Brand>> GetBrands()
         {
@@ -40,7 +38,7 @@ namespace velocitaApi.Controllers
 
             return Ok();
         }
-        [Authorize]
+        [Authorize] // secure endpoint with JWT
         [HttpPost]
         public async Task<ActionResult<Brand>> CreateBrand([FromBody] BrandDto brandDto)
         {

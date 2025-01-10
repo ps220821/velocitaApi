@@ -72,7 +72,6 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
 builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 {
     options.Password.RequireDigit = true;
@@ -80,7 +79,6 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
     options.Password.RequireUppercase = true;
     options.Password.RequireNonAlphanumeric = true;
 }).AddEntityFrameworkStores<ApplicationDbContext>();
-
 
 builder.Services.AddAuthentication(options =>
 {
@@ -104,9 +102,10 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
+// SMTP 
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
 builder.Services.AddTransient<SmtpService>();
-
+// repositories and services
 builder.Services.AddScoped<ICarRepository, CarRepository>();
 builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -116,11 +115,10 @@ builder.Services.AddScoped<IOptionRepository, OptionRepository>();
 builder.Services.AddScoped<ICarOptionRepository, CarOptionRepository>();
 builder.Services.AddScoped<ICarSpecRepository, CarSpecRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
-// pdf
+// PDF service 
 builder.Services.AddScoped<PdfContractService>();
 
 var app = builder.Build();
-
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
