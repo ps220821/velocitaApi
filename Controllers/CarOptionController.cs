@@ -18,7 +18,6 @@ public class CarOptionController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize]
     public async Task<IActionResult> AddCarOption(CarOptionDto carOptionDto)
     {
         bool checkExist = await _carOptionRepository.CheckIFExist(carOptionDto.CarId, carOptionDto.OptionId);
@@ -26,6 +25,8 @@ public class CarOptionController : ControllerBase
         {
             return BadRequest("Option is already added to the car");
         }
+
+
         var mappedCarOption = Mapper.DtoMapper<CarOption>(carOptionDto);
         await _carOptionRepository.AddCarOption(mappedCarOption);
 
@@ -33,7 +34,6 @@ public class CarOptionController : ControllerBase
     }
 
     [HttpDelete("car/{carId}/option/{optionId}")]
-    [Authorize]
     public async Task<IActionResult> DeleteCarOption([FromRoute] int carId, [FromRoute] int optionId)
     {
         var carOption = await _carOptionRepository.FindCarOption(carId, optionId);

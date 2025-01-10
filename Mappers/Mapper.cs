@@ -63,5 +63,32 @@ namespace velocitaApi.Mappers
             }
             return target;
         }
+
+
+
+        public static T MapCreate<T>(object dto) where T : class, new()
+        {
+            if (dto == null)
+            {
+                throw new ArgumentNullException(nameof(dto), "The DTO cannot be null.");
+            }
+
+            var target = new T();
+            var targetType = typeof(T);
+            var sourceType = dto.GetType();
+
+            foreach (var sourceProp in sourceType.GetProperties(BindingFlags.Public | BindingFlags.Instance))
+            {
+                var targetProp = targetType.GetProperty(sourceProp.Name);
+                if (targetProp != null && targetProp.CanWrite &&
+                    targetProp.PropertyType == sourceProp.PropertyType)
+                {
+                    var value = sourceProp.GetValue(dto);
+                    targetProp.SetValue(target, value);
+                }
+            }
+
+            return target;
+        }
     }
 }

@@ -33,10 +33,10 @@ namespace velocitaApi.Controllers
 
             if (brand == null)
             {
-                throw new KeyNotFoundException($"Brand with ID {id} not found.");
+                return NotFound($"Brand with ID {id} not found.");
             }
 
-            return Ok();
+            return Ok(brand);
         }
         [Authorize] // secure endpoint with JWT
         [HttpPost]

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using velocitaApi.data;
 
@@ -11,9 +12,11 @@ using velocitaApi.data;
 namespace velocitaApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250110094830_carImagessseaw")]
+    partial class carImagessseaw
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,19 +80,19 @@ namespace velocitaApi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "7555371a-22d4-48a6-acee-b860bf2f6c1b",
+                            Id = "d29f3fbb-d58f-4a10-979d-dc65f7b9623d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "512c1e62-bd29-4002-bb19-beefea3eec16",
+                            Id = "8cf418dc-6155-46e7-85fd-82354f75a5be",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "cd1fab24-017a-423e-a4fb-ae6ba4094829",
+                            Id = "4c405ef2-950c-4159-8459-e4441b26ed73",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -313,10 +316,6 @@ namespace velocitaApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Mileage")
                         .HasColumnType("int");
 
@@ -329,6 +328,10 @@ namespace velocitaApi.Migrations
 
                     b.Property<int>("Year")
                         .HasColumnType("int");
+
+                    b.Property<string>("description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
 
@@ -661,13 +664,11 @@ namespace velocitaApi.Migrations
                 {
                     b.HasOne("velocitaApi.models.Brand", "Brand")
                         .WithMany("Cars")
-                        .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("BrandId");
 
                     b.HasOne("velocitaApi.models.Category", "Category")
                         .WithMany("Cars")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("CategoryId");
 
                     b.Navigation("Brand");
 

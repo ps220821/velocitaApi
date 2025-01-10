@@ -47,7 +47,6 @@ namespace velocitaApi.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<ActionResult<Order>> CreateOrder([FromBody] OrderDto orderDto)
         {
             var mappedOrder = Mapper.DtoMapper<Order>(orderDto);
@@ -123,7 +122,6 @@ namespace velocitaApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
 
         public async Task<ActionResult> DeleteOrder([FromRoute] int id)
         {

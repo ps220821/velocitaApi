@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using velocitaApi.data;
 
@@ -11,9 +12,11 @@ using velocitaApi.data;
 namespace velocitaApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250110093427_carImagles")]
+    partial class carImagles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,19 +80,19 @@ namespace velocitaApi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "7555371a-22d4-48a6-acee-b860bf2f6c1b",
+                            Id = "74930b20-5f2f-48bc-822f-b2fd22ff7639",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "512c1e62-bd29-4002-bb19-beefea3eec16",
+                            Id = "0a2d0456-091c-48d1-ba98-a5e94a00dc08",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "cd1fab24-017a-423e-a4fb-ae6ba4094829",
+                            Id = "5a9996e9-43a8-41de-92e6-d29eb49ad13f",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -313,10 +316,6 @@ namespace velocitaApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Mileage")
                         .HasColumnType("int");
 
@@ -329,6 +328,10 @@ namespace velocitaApi.Migrations
 
                     b.Property<int>("Year")
                         .HasColumnType("int");
+
+                    b.Property<string>("description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
 
@@ -599,9 +602,8 @@ namespace velocitaApi.Migrations
             modelBuilder.Entity("CarImages", b =>
                 {
                     b.HasOne("velocitaApi.models.Car", "Car")
-                        .WithMany("CarImages")
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("CarId");
 
                     b.Navigation("Car");
                 });
@@ -661,13 +663,11 @@ namespace velocitaApi.Migrations
                 {
                     b.HasOne("velocitaApi.models.Brand", "Brand")
                         .WithMany("Cars")
-                        .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("BrandId");
 
                     b.HasOne("velocitaApi.models.Category", "Category")
                         .WithMany("Cars")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("CategoryId");
 
                     b.Navigation("Brand");
 
@@ -728,8 +728,6 @@ namespace velocitaApi.Migrations
 
             modelBuilder.Entity("velocitaApi.models.Car", b =>
                 {
-                    b.Navigation("CarImages");
-
                     b.Navigation("CarOptions");
 
                     b.Navigation("CarSpecs");

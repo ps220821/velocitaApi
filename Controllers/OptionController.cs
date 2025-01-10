@@ -41,7 +41,6 @@ namespace velocitaApi.Controllers
 
         [HttpPost]
         [Authorize]
-
         public async Task<ActionResult<Option>> CreateOption([FromBody] OptionDto optionDto)
         {
             var mappedOption = Mapper.DtoMapper<Option>(optionDto);

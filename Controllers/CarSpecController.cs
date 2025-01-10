@@ -52,6 +52,7 @@ namespace velocitaApi.Controllers
                 return BadRequest("Car not found");
             }
             var mappedCar = Mapper.DtoMapper<CarSpec>(carSpecDto);
+            mappedCar.Car = car;
 
             var createdCarSpec = await _carSpecRepository.CreateAsync(mappedCar);
             if (createdCarSpec == null)
@@ -71,7 +72,7 @@ namespace velocitaApi.Controllers
                 return NotFound($"CarSpec with ID {id} not found.");
             }
             var mappedCarSpec = Mapper.DtoMapper(carSpecDto, carSpec);
-            mappedCarSpec.CarId = carSpec.CarId;
+            mappedCarSpec.Car = carSpec.Car;
 
             var updatedCarSpec = await _carSpecRepository.UpdateAsync(mappedCarSpec);
 

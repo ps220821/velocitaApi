@@ -11,12 +11,13 @@ namespace velocitaApi.models
         public int Year { get; set; }
         public int Price { get; set; }
         public int Mileage { get; set; }
+        public string Description { get; set; }
 
-        [ForeignKey("categoryId")]
+        [ForeignKey("CategoryId")]
         public int? CategoryId { get; set; }
         public Category Category { get; set; }
 
-        [ForeignKey("brandId")]
+        [ForeignKey("BrandId")]
         public int? BrandId { get; set; }
         public Brand? Brand { get; set; }
 
@@ -28,5 +29,8 @@ namespace velocitaApi.models
 
         [JsonIgnore]
         public ICollection<CarSpec> CarSpecs { get; set; }
+
+        [JsonIgnore]
+        public ICollection<CarImages> CarImages { get; set; }
     }
 }

@@ -27,27 +27,36 @@ namespace velocitaApi.Controllers
         }
         // GET: api/Customer/id 
         [HttpGet("{id}")]
-        public async Task<Customer?> GetByIdAsync(int id)
+        public async Task<ActionResult<Customer?>> GetByIdAsync(int id)
         {
-            return await _customerInterface.GetByIdAsync(id);
+            var customer = await _customerInterface.GetByIdAsync(id);
+            if (customer == null)
+            {
+                return NotFound("customer nort found");
+            }
+            return customer;
         }
         // POST: api/Customer
         [HttpPost]
+        [Authorize]
+
         public async Task<Customer> CreateAsync([FromBody] CustomerDto customerDto)
         {
             var customer = Mapper.DtoMapper<Customer>(customerDto);
             return await _customerInterface.CreateAsync(customer);
         }
+
         // PUT: api/Customer/id
         [HttpPut("{id}")]
         [Authorize]
+
         public async Task<ActionResult<Customer>> UpdateAsync([FromRoute] int id, [FromBody] CustomerDto customerDto)
         {
             var customer = await _customerInterface.GetByIdAsync(id);
 
             if (customer == null)
             {
-                return NotFound();
+                return NotFound("customer not found");
             }
 
             customer = Mapper.DtoMapper(customerDto, customer);
@@ -62,7 +71,7 @@ namespace velocitaApi.Controllers
 
             if (customer == null)
             {
-                return NotFound();
+                return NotFound("customer not found");
             }
 
             return await _customerInterface.DeleteAsync(customer);

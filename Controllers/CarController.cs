@@ -4,6 +4,7 @@ using velocitaApi.Dtos.car;
 using velocitaApi.Interfaces;
 using velocitaApi.Mappers;
 using velocitaApi.models;
+using velocitaApi.Repository;
 
 namespace velocitaApi.Controllers
 {
@@ -13,12 +14,15 @@ namespace velocitaApi.Controllers
     {
         private readonly ICarRepository _carRepository;
         private readonly IBrandRepository _brandRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public CarController(ICarRepository carRepository, IBrandRepository brandrepository)
+        public CarController(ICarRepository carRepository, IBrandRepository brandrepository, ICategoryRepository categoryRepository)
         {
             _carRepository = carRepository;
             _brandRepository = brandrepository;
+            _categoryRepository = categoryRepository;
         }
+
 
         [HttpGet]
         public async Task<ActionResult<Car>> GetCars()
@@ -44,30 +48,35 @@ namespace velocitaApi.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        // [Authorize]
         public async Task<ActionResult<Car>> CreateCar([FromBody] CarDto carDto)
-
         {
+
             var brand = await _brandRepository.GetByIdAsync(carDto.BrandId);
             if (brand == null)
             {
                 return NotFound("Brand not found");
             }
 
-            var mappedCar = Mapper.DtoMapper<Car>(carDto);
+            var category = await _categoryRepository.GetByIdAsync(carDto.CategoryId);
+            if (category == null)
+            {
+                return NotFound("Category not found");
+            }
+            var mappedCar = Mapper.MapCreate<Car>(carDto);
+            mappedCar.Brand = brand;
+            mappedCar.Category = category;
 
             var createdCar = await _carRepository.CreateAsync(mappedCar);
-
             if (createdCar == null)
             {
                 return BadRequest("Car not created");
             }
-
-            return CreatedAtAction(nameof(GetById), new { id = createdCar.id }, createdCar);
+            return createdCar;
         }
 
         [HttpPut("{id}")]
-        [Authorize]
+        // [Authorize]
         public async Task<ActionResult<Car>> UpdateCar([FromRoute] int id, [FromBody] CarDto carDto)
         {
             // Find the existing car by its ID
@@ -88,6 +97,18 @@ namespace velocitaApi.Controllers
                 existingCar.Brand = brand;
                 existingCar.BrandId = carDto.BrandId;
             }
+
+            if (existingCar.Category?.id != carDto.CategoryId)
+            {
+                var category = await _categoryRepository.GetByIdAsync(carDto.CategoryId);
+                if (category == null)
+                {
+                    return NotFound("Category not found");
+                }
+                existingCar.Category = category;
+                existingCar.CategoryId = carDto.CategoryId;
+            }
+
             var mappedCar = Mapper.DtoMapper(carDto, existingCar);
 
             var updatedCar = await _carRepository.UpdateAsync(mappedCar);

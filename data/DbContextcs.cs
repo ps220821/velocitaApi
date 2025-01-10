@@ -26,6 +26,24 @@ namespace velocitaApi.data
             };
             modelBuilder.Entity<IdentityRole>().HasData(roles);
 
+            modelBuilder.Entity<Car>()
+                .HasOne(c => c.Brand)
+                .WithMany(b => b.Cars)
+                .HasForeignKey(c => c.BrandId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Car>()
+                .HasOne(c => c.Category)
+                .WithMany(c => c.Cars)
+                .HasForeignKey(c => c.CategoryId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<CarImages>()
+              .HasOne(ci => ci.Car)
+              .WithMany(c => c.CarImages)
+              .HasForeignKey(ci => ci.CarId)
+              .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Order>()
                 .Property(o => o.TotalCost)
                 .HasColumnType("decimal(18, 2)");
@@ -42,13 +60,7 @@ namespace velocitaApi.data
                 .HasForeignKey(o => o.carId)
                 .OnDelete(DeleteBehavior.SetNull);
 
-            // modelBuilder.Entity<Order>()
-            //     .HasOne(o => o.User)
-            //     .WithMany(u => u.Orders)
-            //     .HasForeignKey(o => o.processedByUserId)
-            //     .OnDelete(DeleteBehavior.SetNull);
 
-            // Convert orderStatus and serviceType to string
             modelBuilder.Entity<Order>()
                 .Property(o => o.OrderStatus)
                 .HasConversion<string>();
@@ -91,6 +103,8 @@ namespace velocitaApi.data
             modelBuilder.Entity<CarSpec>()
                 .Property(c => c.FuelType)
                 .HasConversion<string>();
+
+
         }
         // table sets
         public DbSet<Car> car { get; set; } = null!;
@@ -101,5 +115,6 @@ namespace velocitaApi.data
         public DbSet<Option> options { get; set; } = null!;
         public DbSet<CarOption> CarOptions { get; set; } = null!;
         public DbSet<CarSpec> CarSpecs { get; set; } = null!;
+        public DbSet<CarImages> carImages { get; set; } = null!;
     }
 }

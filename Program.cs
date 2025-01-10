@@ -25,13 +25,7 @@ builder.Services.AddCors(options =>
                .AllowAnyHeader());
 });
 
-// builder.WebHost.ConfigureKestrel(options =>
-// {
-//     options.ListenAnyIP(5001, listenOptions =>
-//     {
-//         listenOptions.UseHttps("./certificates/httpscert.pfx", "yourpassword");
-//     });
-// });
+
 
 builder.Services.AddControllers(options =>
 {
@@ -114,6 +108,7 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOptionRepository, OptionRepository>();
 builder.Services.AddScoped<ICarOptionRepository, CarOptionRepository>();
 builder.Services.AddScoped<ICarSpecRepository, CarSpecRepository>();
+builder.Services.AddScoped<ICarImages, CarImageRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 // PDF service 
 builder.Services.AddScoped<PdfContractService>();
@@ -125,7 +120,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     app.UseSwaggerUI();
 }
 // Enable Identity APIs
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiddleware<GlobalExceptionMiddleware>();
