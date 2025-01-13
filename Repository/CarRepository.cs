@@ -18,7 +18,10 @@ namespace velocitaApi.Repository
 
         public async Task<IEnumerable<Car>> GetAllAsync()
         {
-            var cars = await _context.car.ToListAsync();
+            var cars = await _context.car
+            .Include(c => c.Brand)
+            .Include(c => c.Category)
+            .ToListAsync();
             return cars;
         }
 

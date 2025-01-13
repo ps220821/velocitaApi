@@ -120,7 +120,8 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     app.UseSwaggerUI();
 }
 // Enable Identity APIs
-// app.UseHttpsRedirection();
+app.UseCors("AllowAllOrigins");
+app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiddleware<GlobalExceptionMiddleware>();

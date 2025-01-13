@@ -167,3 +167,4 @@ C:\Users\inanc\Desktop\Fontys\talk to me project\velocitaApi\obj\Debug\net8.0\re
 C:\Users\inanc\Desktop\Fontys\talk to me project\velocitaApi\bin\Debug\net8.0\velocitaApi.staticwebassets.endpoints.json
 C:\Users\inanc\Desktop\Fontys\talk to me project\velocitaApi\obj\Debug\net8.0\staticwebassets.build.endpoints.json
 C:\Users\inanc\Desktop\Fontys\talk to me project\velocitaApi\obj\Debug\net8.0\staticwebassets\msbuild.velocitaApi.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\inanc\Desktop\Fontys\talk to me project\velocitaApi\bin\Debug\net8.0\web.config
