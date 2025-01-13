@@ -26,7 +26,6 @@ public class CarOptionController : ControllerBase
             return BadRequest("Option is already added to the car");
         }
 
-
         var mappedCarOption = Mapper.DtoMapper<CarOption>(carOptionDto);
         await _carOptionRepository.AddCarOption(mappedCarOption);
 
