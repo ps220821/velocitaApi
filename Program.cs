@@ -120,7 +120,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     // app.UseSwaggerUI();
     app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Your API V1");
+    c.SwaggerEndpoint("z", "Your API V1");
     c.RoutePrefix = string.Empty; // Sets Swagger UI at the root
 });
 }
