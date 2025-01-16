@@ -117,16 +117,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
-    // app.UseSwaggerUI();
-    app.UseSwaggerUI(c =>
-{
-    c.SwaggerEndpoint("z", "Your API V1");
-    c.RoutePrefix = string.Empty; // Sets Swagger UI at the root
-});
+    app.UseSwaggerUI();
 }
 // Enable Identity APIs
 app.UseCors("AllowAllOrigins");
-app.UseStaticFiles();
+app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiddleware<GlobalExceptionMiddleware>();
